@@ -41,7 +41,8 @@ public class MainActivity extends ApplicationAdapter {
 		environment2.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, 5f, 5f, 5f));
 
 		modelBatch=new ModelBatch();
-
+		mapBlock=new MapBlock();
+		mapBlock.initNewBlock();
 	}
 
 	@Override
@@ -53,8 +54,10 @@ public class MainActivity extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
 		camController.update();
-		modelBatch.begin(cam);
+		mapBlock.update(Gdx.graphics.getDeltaTime());
 
+		modelBatch.begin(cam);
+		mapBlock.render(modelBatch,environment);
 		modelBatch.end();
 
 	}

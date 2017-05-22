@@ -9,12 +9,15 @@ import com.badlogic.gdx.math.Vector3;
 
 public class Block extends BaseActor3D {
     private float target;
-    private boolean transforming=false;
+    private boolean transforming;
+    private boolean using;
     public Block(String id, ModelInstance instance, Vector3 position){
         super();
         setId(id);
         setPosition(position);
         setModelInstance(instance);
+        transforming=false;
+        setUsing(true);
     }
     public boolean breakX(boolean pos){
         if(pos) {
@@ -43,6 +46,7 @@ public class Block extends BaseActor3D {
     public Block clone(){
         Block newbie =new Block(getId(),getInstance(),getPosition());
         newbie.setTarget(this.target);
+        newbie.setUsing(isUsing());
         return newbie;
     }
 
@@ -60,5 +64,13 @@ public class Block extends BaseActor3D {
 
     public void setTransforming(boolean transforming) {
         this.transforming = transforming;
+    }
+
+    public boolean isUsing() {
+        return using;
+    }
+
+    public void setUsing(boolean using) {
+        this.using = using;
     }
 }
