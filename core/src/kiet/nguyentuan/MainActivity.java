@@ -40,10 +40,24 @@ public class MainActivity extends ApplicationAdapter {
 		environment2.set(new ColorAttribute(ColorAttribute.AmbientLight, 1f, 1f, 1f, 1f));
 		environment2.add(new DirectionalLight().set(0.8f, 0.8f, 0.8f, 5f, 5f, 5f));
 
-		mapBlock=new MapBlock();
 		modelBatch=new ModelBatch();
+
 	}
 
+	@Override
+	public void render () {
+
+
+		Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		Gdx.gl.glClearColor(1, 1, 1, 1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+
+		camController.update();
+		modelBatch.begin(cam);
+
+		modelBatch.end();
+
+	}
 	@Override
 	public void resize (int width, int height) {
 		float vFoV = 50f * ((float)height/(float)width);
@@ -70,32 +84,6 @@ public class MainActivity extends ApplicationAdapter {
 	}
 
 
-	@Override
-	public void render () {
-		if(Gdx.input.isKeyPressed(Input.Keys.ENTER)&&mapBlock.isTransforming()==false) {
-			mapBlock.transformMap(MapBlock.UP);
-
-		}
-		mapBlock.update(Gdx.graphics.getDeltaTime());
-		//gameStage.act(Gdx.graphics.getDeltaTime());
-		Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		Gdx.gl.glClearColor(1, 1, 1, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-
-		camController.update();
-		modelBatch.begin(cam);
-		for(int i=0;i<7;i++){
-			for(int j=0;j<7;j++){
-				if(mapBlock.getMap()[i][j] !=null){
-					mapBlock.getMap()[i][j].act(Gdx.graphics.getDeltaTime()/10f);
-					modelBatch.render(mapBlock.getMap()[i][j].getInstance(),environment);
-				}
-			}
-		}
-		modelBatch.end();
-		//gameStage.draw();
-	}
-	
 	@Override
 	public void dispose () {
 
