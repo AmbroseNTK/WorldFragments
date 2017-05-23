@@ -47,8 +47,8 @@ public class MainActivity extends ApplicationAdapter {
 
 	@Override
 	public void render () {
-
-
+		if(Gdx.input.isKeyPressed(Input.Keys.ENTER)&&!mapBlock.isTransforming())
+			mapBlock.transformMap(MapBlock.UP);
 		Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
